@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int minimumSubarrayLength(vector<int>& nums, int k) {
+
+    int n = nums.size();
+    int ans = INT_MAX;
+
+    // Try every possible starting index
+    for (int i = 0; i < n; i++) {
+
+        int currOR = 0;
+
+        // Extend the subarray
+        for (int j = i; j < n; j++) {
+
+            currOR = currOR | nums[j];
+
+            if (currOR >= k) {
+                ans = min(ans, j - i + 1);
+            }
+        }
+    }
+
+    if (ans == INT_MAX)
+        return -1;
+
+    return ans;
+}
+
+int main() {
+
+    int n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    cout << "Enter array elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+
+    int k;
+    cout << "Enter k: ";
+    cin >> k;
+
+    int ans = minimumSubarrayLength(nums, k);
+
+    cout << "Shortest Subarray Length = " << ans << endl;
+
+    return 0;
+}
